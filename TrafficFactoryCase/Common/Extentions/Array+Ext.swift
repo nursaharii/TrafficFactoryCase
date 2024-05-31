@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+extension Array: Cachable where Element: Cachable {
+    static var cacheKey: String {
+        return "\(Element.cacheKey)Array"
+    }
+}

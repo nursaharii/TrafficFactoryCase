@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+struct UrlConstants {
+    static let baseUrl = "https://496.ams3.cdn.digitaloceanspaces.com"
+}
