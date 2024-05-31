@@ -96,6 +96,7 @@ extension ItemsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
         cell.selectionStyle = .none
+        cell.addShadow()
         let item = viewModel.items[indexPath.row]
         cell.configure(with: item)
         return cell

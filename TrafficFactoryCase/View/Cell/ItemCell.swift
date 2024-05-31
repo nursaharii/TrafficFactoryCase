@@ -15,13 +15,18 @@ class ItemCell: UITableViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.image = UIImage(systemName: "photo") // Placeholder image
+        imageView.addShadow()
+        imageView.cornerRadius = 10
         return imageView
     }()
+    
+    let blurEffect = UIBlurEffect(style: .light)
     
     let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = UIFont.boldSystemFont(ofSize: 28)
+        label.textColor = .white
         label.numberOfLines = 0
         return label
     }()
@@ -29,7 +34,8 @@ class ItemCell: UITableViewCell {
     let descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 20)
+        label.textColor = .white
         label.numberOfLines = 0
         return label
     }()
@@ -80,25 +86,36 @@ class ItemCell: UITableViewCell {
     }
     
     private func setupUI() {
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.translatesAutoresizingMaskIntoConstraints = false
+        blurEffectView.bottomRadius = 10
+        
         contentView.addSubview(itemImageView)
+        contentView.addSubview(blurEffectView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(descriptionLabel)
         contentView.addSubview(activityIndicator)
         
         NSLayoutConstraint.activate([
             itemImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            itemImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            itemImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            itemImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            itemImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            itemImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
             itemImageView.heightAnchor.constraint(equalTo: itemImageView.widthAnchor), // Aspect ratio 1:1
             
-            titleLabel.topAnchor.constraint(equalTo: itemImageView.bottomAnchor, constant: 10),
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            blurEffectView.bottomAnchor.constraint(equalTo: itemImageView.bottomAnchor),
+            blurEffectView.topAnchor.constraint(equalTo: itemImageView.bottomAnchor, constant: -100),
+            blurEffectView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            blurEffectView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            
+            titleLabel.topAnchor.constraint(equalTo: itemImageView.bottomAnchor, constant: -90),
+            titleLabel.leadingAnchor.constraint(equalTo: itemImageView.leadingAnchor, constant: 10),
+            titleLabel.trailingAnchor.constraint(equalTo: itemImageView.trailingAnchor, constant: -10),
             
             descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
-            descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+            descriptionLabel.leadingAnchor.constraint(equalTo: itemImageView.leadingAnchor, constant: 10),
+            descriptionLabel.trailingAnchor.constraint(equalTo: itemImageView.trailingAnchor, constant: -10),
+            descriptionLabel.bottomAnchor.constraint(equalTo: itemImageView.bottomAnchor, constant: -10),
             
             activityIndicator.centerXAnchor.constraint(equalTo: itemImageView.centerXAnchor),
             activityIndicator.centerYAnchor.constraint(equalTo: itemImageView.centerYAnchor)
